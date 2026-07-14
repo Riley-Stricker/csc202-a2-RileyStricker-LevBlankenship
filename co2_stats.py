@@ -149,14 +149,21 @@ def answer_5(lst: RowList) -> float:
    country_data : RowList = filter(filter(lst,'year','equal',2014),'country','equal','Luxembourg')
    emissions : float = getattr(country_data.first,"electricity_and_heat_co2_emissions")
    emissions_per_capita : float = getattr(country_data.first,'electricity_and_heat_co2_emissions_per_capita')
-   return (emissions/emissions_per_capita)*1000000
+   return round((emissions/emissions_per_capita)*1000000)
 
 def answer_6(lst: RowList) -> float:
-   pass
+   china_lst : RowList = filter(lst,'country','equal','China')
+   early : float = getattr(filter(china_lst,'year','equal',1990).first,
+                           'electricity_and_heat_co2_emissions')
+   late : float = getattr(filter(china_lst,'year','equal',2020).first,
+                           'electricity_and_heat_co2_emissions')
+   return late/early
 
 def answer_7(lst: RowList) -> float:
-   pass
-
+   china_lst : RowList = filter(lst,'country','equal','China')
+   late : float = getattr(filter(china_lst,'year','equal',2020).first,
+                           'electricity_and_heat_co2_emissions')
+   return (answer_6(lst))**5+late
 
 class Tests(unittest.TestCase):
   def test_parse_float_or_none(self):
