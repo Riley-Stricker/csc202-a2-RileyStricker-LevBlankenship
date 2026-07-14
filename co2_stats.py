@@ -165,6 +165,7 @@ def answer_7(lst: RowList) -> float:
                            'electricity_and_heat_co2_emissions')
    return (answer_6(lst))**5+late
 
+
 class Tests(unittest.TestCase):
   def test_parse_float_or_none(self):
      self.assertEqual(None, parse_float_or_none(''))
@@ -182,8 +183,8 @@ class Tests(unittest.TestCase):
                                     '4.9','8.0']), 
                       Row('abc',2940,43905.09,2489.7,1.4,0.98,4.9,8.0))
   
- # def test_read_csv_lines(self):
-#     self.assertEqual()
+  #def test_read_csv_lines(self):
+     #self.assertEqual(read_csv_lines('sample-file.csv'),)
   
   def test_listlen(self):
      self.assertEqual(0,listlen(None))
@@ -208,8 +209,18 @@ class Tests(unittest.TestCase):
 
 
 
-  #def test_fillter(self):
-     #self.assertEqual()
+  def test_filter(self):
+     lst = RLNode(Row('abc',2940,0.0,None,0.0,None,0.0,None),
+                                       RLNode(Row('jklasd',40,None,0.0,None,0.0,None,0.0),
+                                              RLNode(Row('a',3,None,None,None,None,None,
+                                                         None),None)))
+     self.assertEqual(filter(lst,'year','greater_than',5),RLNode(Row('abc',2940,0.0,None,
+                                                                     0.0,None,0.0,None),
+                                       RLNode(Row('jklasd',40,None,0.0,None,0.0,None,0.0),None)))
+     self.assertEqual(filter(lst,'total_co2_emissions_excluding_lucf_per_capita',
+                             'less_than',99999999999),
+                      RLNode(Row('jklasd',40,None,0.0,None,0.0,None,0.0),None))
+     self.assertEqual(filter(lst,'country','equal','ooooo'),None)
 
 
 if __name__ == '__main__':
